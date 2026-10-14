@@ -8,6 +8,11 @@
 
 using namespace std;
 
+#include <fstream>
+#include <sstream>
+#include <string>
+#include <iostream>
+
 void Leerarchivo(Queue* pacientes) {
     ifstream archivo("pacientes.txt");
 
@@ -16,57 +21,59 @@ void Leerarchivo(Queue* pacientes) {
         return;
     }
 
+    string linea;
     
-    char linea[200]; 
-
-    //la línea directamente sobre el arreglo
-    while (archivo.getline(linea, 200)) {
+    // leemos el archivo linea por linea
+    while (getline(archivo, linea)) {
         
-        //puntero apuntando a la primera letra del arreglo
-        char* puntero = linea; 
+        stringstream ss(linea); 
         
-        string id = "";
-        string nombre = "";
-        string edad = "";
-        string servicio = "";
+        // variables temporales para atrapar la info
+        string id, nombre, edadStr, tempStr, presionStr, dolorStr;
+        string tipoDolor, traumaStr, neuroStr, cirugiaStr, diasStr;
 
-       // ID
-        while (*puntero != ';' && *puntero != '\0') {
-            id += *puntero;
-            puntero++; 
+        // extraemos la infor hasta ';'
+        getline(ss, id, ';');
+        getline(ss, nombre, ';');
+        getline(ss, edadStr, ';');
+        getline(ss, tempStr, ';');
+        getline(ss, presionStr, ';');
+        getline(ss, dolorStr, ';');
+        getline(ss, tipoDolor, ';');
+        getline(ss, traumaStr, ';');
+        getline(ss, neuroStr, ';');
+        getline(ss, cirugiaStr, ';');
+        getline(ss, diasStr, ';'); // ell último podria no tener ';', getline lo maneja
+
+        // vemos que la linea no estuviera vacia (para evitar crasheos si hay saltos de linea al final)
+        if (id.empty()) continue;
+
+        //convertimos los datos strings a ints o doubles
+        int edad = stoi(edadStr);
+        double temperatura = stod(tempStr);
+        int presion = stoi(presionStr);
+        int dolor = stoi(dolorStr);
+        bool trauma = false;
+        bool neuro = false;
+        bool cirugia = false;
+        int dias = stoi(diasStr);
+
+        if(traumaStr=="1"){
+            trauma = true;
         }
-        puntero++; // saltamos por encima del ';'
-
-        // NOMBre
-        while (*puntero != ';' && *puntero != '\0') {
-            nombre += *puntero;
-            puntero++; 
+        if(neuroStr=="1"){
+            neuro=true;
         }
-        puntero++; 
-
-        // EDAD
-        while (*puntero != ';' && *puntero != '\0') {
-            edad += *puntero;
-            puntero++; 
-        }
-        puntero++; 
-
-        // SERVICIO
-        // ultimo dato, no hay un ';' al final
-        
-        while (*puntero != '\0') {
-            servicio += *puntero;
-            puntero++; 
+        if(cirugiaStr=="1"){
+            cirugia = true;
         }
 
-        int edadn = stoi(edad);
-
-
-		Paciente* p = new Paciente(nombre,edadn,id,servicio); 
-		Nodo* n = new Nodo(p);
-		pacientes->push(n);
 
         
+        // instanciamos al paciente
+        Paciente* p = new Paciente(nombre, edad, id, temperatura, presion, dolor, tipoDolor, trauma, neuro, cirugia, dias); 
+        Nodo* n = new Nodo(p);
+        pacientes->push(n);
     }
 
     archivo.close();
