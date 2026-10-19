@@ -9,6 +9,7 @@ class Avl {
 private:
     NodoAvl* raiz;
     int maximo(int a, int b); //por si hay problemas al incluir la libreria alghorithm
+    NodoAvl* obtenerMinimo(NodoAvl* nodo);
     // para el balanceo
     int obtenerAltura(NodoAvl* nodo);
     int obtenerFactorBalance(NodoAvl* nodo);
@@ -41,5 +42,7 @@ public:
     void mostrarInorden();
     void mostrarPreorden();
     void mostrarPostorden();
+
+    
 };
 
