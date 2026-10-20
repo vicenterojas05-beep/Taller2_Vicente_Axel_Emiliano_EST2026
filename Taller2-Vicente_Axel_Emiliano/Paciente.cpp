@@ -57,3 +57,8 @@ int Paciente::getDiashospital(){
 	return diashospital;
 }
 
+void Paciente::setServicio(string s){
+
+	servicio = s;
+}
+

@@ -1,19 +1,22 @@
-#include "Lista.h"
 
-class Hospital{
-    private:
+#include "Avl.h"
+#include "Paciente.h"
 
-    Lista* urgencias;
-
-    public:
+class Hospital {
+public:
+    //los 8 arboles
+    Avl* urgencias;
+    Avl* medicina_general;
+    Avl* cardiologia;
+    Avl* neurologia;
+    Avl* traumatologia;
+    Avl* cirugia;
+    Avl* pediatria;
+    Avl* hospitalizacion;
 
     Hospital();
     ~Hospital();
 
-    Lista* getServicio(int s); //funcion que devuelve un servicio en especifico segun la opcion seleccionada en el menu
-    void mostrar_servicios();
-
-    void ingresar_paciente(Paciente* p); //ingresa al paciente al servicio correspondiente
-
-    
+    //funcion para enviar al paciente a su servicio
+    void ingresar_pacienteavl(Paciente* p); 
 };

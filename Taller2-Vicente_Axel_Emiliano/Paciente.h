@@ -31,6 +31,7 @@ class Paciente: public Persona{
 		bool getRequierecirugia();
 		int getDiashospital();
 		void mostrar_info();
+		void setServicio(string s);
 	
 	
 };

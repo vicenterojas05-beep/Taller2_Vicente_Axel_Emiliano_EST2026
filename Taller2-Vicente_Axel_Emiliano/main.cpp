@@ -4,7 +4,7 @@
 #include "Paciente.h"
 #include "Queue.h"
 #include "Hospital.h"
-#include "Stack.h"
+#include "ArbolDecision.h"
 
 using namespace std;
 
@@ -83,22 +83,17 @@ void menu(){
 
     cout<<"===  HOSPITAL MARMAJA  ==="<<endl;
     cout<<"1. Atender pacientes"<<endl;
-    cout<<"2. Ver departamentos"<<endl;
-    cout<<"3. Revisar el historial de atención"<<endl;
+    cout<<"2. Estado de los departamentos"<<endl;
+    cout<<"3. Buscar paciente"<<endl;
     cout<<"4. Salir"<<endl;
 }
 
 
-
-
-
-
-
-
 int main(int argc, char** argv) {
+
 	Queue* cola = new Queue();
-    Stack* historial = new Stack();
     Hospital* hospital = new Hospital();
+    ArbolDecision* arbol = new ArbolDecision();
 	Leerarchivo(cola);
 
     int opcion = 0;
@@ -113,92 +108,68 @@ int main(int argc, char** argv) {
 
         switch(opcion){
 
-            case 1:{
-            cout<<"=== Pacientes en espera ==="<<endl;
-            cola->mostrar_espera();
-            cout<<endl;
-            int cantidad_atencion = 0;
-            cout<<"Indique la cantidad de pacientes a atender: ";
-            cin>>cantidad_atencion;
-            cout<<endl;
-            cout<<"=== ATENDIENDO PACIENTES ==="<<endl;
-            for(int i = 0; i<cantidad_atencion;i++){
-                Nodo* n = cola->front();//tomamos el nodo en el que se encuentra el paciente
-
-                if(n==nullptr){
-                    cout<<"Ya no hay pacientes en espera"<<endl;
-                    break;
-                }
-
-                Paciente* p = n->getPaciente(); //obtenemos al paciente
-
+            case 1: {
+                cout<<"=== ATENDIENDO PACIENTES ==="<<endl;
                 
-                historial->push(p);
-                hospital->ingresar_paciente(p); //ingresamos al paciente y no al nodo, esto para que no este el mismo nodo
-                                                //en dos o  tres listas diferentes de nodos. 
-                cout<<"ID: "<<p->getId()<<endl;
-                cout<<"Nombre: "<<p->getNombre()<<endl;
-                cout<<"Edad: "<<p->getEdad()<<endl;
-                cout<<"Servicio: "<<p->getServicio()<<endl;
-                cout<<endl;
-                cout<<"Paciente enviado a "<<p->getServicio()<<endl;
-                cola->pop(); //Eliminamos solo el nodo
-                cout<<"============================================"<<endl;
+                Nodo* n = cola->front();
 
+                if(n!=nullptr){
+
+                Paciente* p = n->getPaciente();
+                //se hacen las preguntas para determinar el servicio del paciente
+                string servicio_paciente= arbol->clasificarPaciente(p);
+                //le actualizamos el servicio
+                p->setServicio(servicio_paciente);
+                
+
+                //imprimimos como sale en el pdf
+                hospital->ingresar_pacienteavl(p);
+                cout << "ID: " << p->getId() << endl;
+                cout << "Nombre: " << p->getNombre() << endl;
+                cout << "Servicio asignado: " << servicio_paciente<<endl;
+                cout << "Paciente insertado en el AVL de " << servicio_paciente << "." << endl;
+                cout << "---------------------------------" << endl;
+
+                cola->pop(); 
+
+                }
+                
+                break;
             }
 
-
-
-            
-            break;
-
-        }
             case 2: {
+
+                cout<<"=== ESTADO DE LOS DEPARTAMENTOS/SERVICIOS ==="<<endl;
+            
+                break;
+
 				
 			
 
-            cout<<"=== DEPARTAMENTOS/SERVICIOS ==="<<endl;
-            cout<<endl;
-            hospital->mostrar_servicios();
-            cout<<endl;
-            cout<<"Seleccionar opción: ";
-
-            int elegir_servicio = 0;
-            cin>> elegir_servicio;
-
-            Lista* servicio_elegido = hospital->getServicio(elegir_servicio);
-            if(servicio_elegido==nullptr){ //devuelve null si el numero ingresado fue mayor o menor a la cant de servicios
-                break;
-            }
-            cout<<endl;
-            cout<<"=== ESTADO "<<servicio_elegido->getServicio()<<endl;
-            cout<<"Pacientes en el departamento de "<<servicio_elegido->getServicio()<<": "<<servicio_elegido->cantidad_pacientes()<<endl;
-            servicio_elegido->mostrar();
             
-            break;
 			}
 
+
             case 3:{
+                cout<<"=== BUSCAR PACIENTE ==="<<endl;
 
-            cout<<"== HISTORIAL DE ÚLTIMAS ATENCIONES DEL HOSPITAL =="<<endl;
-            cout<<endl;
-            if(historial->empty()){
-                cout<<"<< Todavía no se atiende a ningun paciente >>"<<endl;
                 break;
-            }
-            historial->mostrar_historial();
-            cout<<endl;
             
-            break;
+            
+
             }
 
-            case 4:
+            case 4:{
+                
+                cout<<"Hasta luego :D"<<endl;
+                delete hospital;
+                delete cola;
+                break;
 
-            cout<<"Hasta luego :D"<<endl;
-            delete hospital;
-            delete cola;
-            delete historial;
-            break;
+            
+            }
+
+            
             
 
         }
