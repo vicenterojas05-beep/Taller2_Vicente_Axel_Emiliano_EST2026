@@ -1,0 +1,8 @@
+001;Lucas Nunez;10;37.0;110/70;2;otro;0;0;0;0
+002;Maria Silva;45;38.0;130/85;7;abdomen;0;0;1;5
+003;Pedro Rojas;25;36.8;120/80;6;extremidad;1;0;0;0
+004;Ana Martinez;60;37.2;140/90;4;cabeza;0;1;0;2
+005;Carlos Vera;55;37.1;150/95;5;pecho;0;0;0;1
+006;Sofia Gomez;30;39.5;110/70;9;abdomen;0;0;0;0
+007;Luis Perez;70;37.5;130/80;3;otro;0;0;0;3
+008;Laura Torres;28;36.5;120/80;2;cabeza;0;0;0;0

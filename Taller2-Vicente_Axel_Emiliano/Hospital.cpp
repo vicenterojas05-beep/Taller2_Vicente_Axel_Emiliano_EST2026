@@ -16,6 +16,18 @@ Hospital::Hospital(){
 
 }
 
+Hospital::~Hospital() {
+   //borramos los 8 arboles
+    delete urgencias;
+    delete medicina_general;
+    delete cardiologia;
+    delete neurologia;
+    delete traumatologia;
+    delete cirugia;
+    delete pediatria;
+    delete hospitalizacion;
+}
+
 
 void Hospital::ingresar_pacienteavl(Paciente* p) {
     string destino = p->getServicio();

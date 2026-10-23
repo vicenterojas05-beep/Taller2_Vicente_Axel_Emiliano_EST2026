@@ -48,7 +48,7 @@ ArbolDecision::ArbolDecision() {
 
 
 // aqui se evalua al paciente y se hacen las preguntas
-string ArbolDecision::evaluarRecursivo(NodoDecision* nodo, Paciente* p) {
+string ArbolDecision::evaluarRecursivo(NodoDecision* nodo, Paciente* p, string& ruta) {
     if (nodo == nullptr) return "Error";
 
     // si no tiene hijos es una hoja (servicio)
@@ -59,66 +59,89 @@ string ArbolDecision::evaluarRecursivo(NodoDecision* nodo, Paciente* p) {
     // usamos ifs para preguntarle al nodo que pregunta tiene jejej
     if (nodo->dato == "Pregunta_Edad") {
         if (p->getEdad() < 15){
-            return evaluarRecursivo(nodo->izquierdo, p);
+            ruta+="Edad < 15-->";
+            return evaluarRecursivo(nodo->izquierdo, p, ruta);
         }
         else {
-            return evaluarRecursivo(nodo->derecho, p);
+
+            ruta+="Edad >= 15 ---> ";
+            return evaluarRecursivo(nodo->derecho, p, ruta);
         }
     }
     
     if (nodo->dato == "Pregunta_Cirugia") {
         if (p->getRequierecirugia() == 1){
-            return evaluarRecursivo(nodo->izquierdo, p);
+            ruta+="Cirugia: SI --->";
+            return evaluarRecursivo(nodo->izquierdo, p, ruta);
         } 
         else{
-            return evaluarRecursivo(nodo->derecho, p);   
+
+            ruta+="Cirugia: NO ---> ";
+            return evaluarRecursivo(nodo->derecho, p, ruta);   
         } 
     }
     
     if (nodo->dato == "Pregunta_Trauma") {
         if (p->getTrauma() == 1) {
-            return evaluarRecursivo(nodo->izquierdo, p);
+            ruta+="Trauma: SI ---> ";
+            return evaluarRecursivo(nodo->izquierdo, p, ruta);
         }
         else {
-            return evaluarRecursivo(nodo->derecho, p);
+            ruta+="Trauma: NO --->";
+
+            return evaluarRecursivo(nodo->derecho, p, ruta);
         }
     }
     
     if (nodo->dato == "Pregunta_Neuro") {
         if (p->getSintomasneuro() == 1) {
-            return evaluarRecursivo(nodo->izquierdo, p);
+
+            ruta+="Sintomas neurologicos: SI ---> ";
+            return evaluarRecursivo(nodo->izquierdo, p, ruta);
         }
         else {
-            return evaluarRecursivo(nodo->derecho, p);
+            ruta+="Sintomas neurologicos: NO ---> ";
+            return evaluarRecursivo(nodo->derecho, p, ruta);
         }
     }
     
     if (nodo->dato == "Pregunta_Pecho") {
         if (p->getTipodolor() == "pecho") {
-            return evaluarRecursivo(nodo->izquierdo, p);
+            ruta+="Dolor pecho: SI --->";
+            return evaluarRecursivo(nodo->izquierdo, p, ruta);
         }
         else {
-            return evaluarRecursivo(nodo->derecho, p);
+            ruta+="Dolor pecho: NO --->";
+            return evaluarRecursivo(nodo->derecho, p, ruta);
         }
     }
     
     if (nodo->dato == "Pregunta_Urgencia") {
         if (p->getDolor() >= 8 || p->getTemperatura() >= 39.0) {
-            return evaluarRecursivo(nodo->izquierdo, p);
+            ruta+="Urgencia: SI ---> ";
+            return evaluarRecursivo(nodo->izquierdo, p, ruta);
         }
         else {
-            return evaluarRecursivo(nodo->derecho, p);
+            ruta+="Urgencia: NO ---> ";
+            return evaluarRecursivo(nodo->derecho, p, ruta);
         }
     }
     
     if (nodo->dato == "Pregunta_Dias") {
         if (p->getDiashospital() >= 1) {
-            return evaluarRecursivo(nodo->izquierdo, p);
+            ruta+="Dias Hospital: "+to_string(p->getDiashospital());
+            return evaluarRecursivo(nodo->izquierdo, p, ruta);
         }
         else {
-            return evaluarRecursivo(nodo->derecho, p);
+            ruta+="Dias Hospital: 0";
+            return evaluarRecursivo(nodo->derecho, p, ruta);
         }
     }
 
     return "Error";
+}
+
+string ArbolDecision::clasificarPaciente(Paciente* p, string& ruta){
+
+    return evaluarRecursivo(raiz, p, ruta);
 }

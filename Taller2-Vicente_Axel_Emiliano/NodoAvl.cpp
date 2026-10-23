@@ -39,3 +39,8 @@ void NodoAvl::setPaciente(Paciente* p){
 }
 
 
+Paciente* NodoAvl::getPaciente(){
+    return paciente;
+}
+
+

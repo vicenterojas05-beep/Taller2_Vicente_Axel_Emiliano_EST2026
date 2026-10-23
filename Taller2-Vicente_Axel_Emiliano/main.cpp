@@ -112,12 +112,13 @@ int main(int argc, char** argv) {
                 cout<<"=== ATENDIENDO PACIENTES ==="<<endl;
                 
                 Nodo* n = cola->front();
+                string ruta = "";
 
                 if(n!=nullptr){
 
                 Paciente* p = n->getPaciente();
                 //se hacen las preguntas para determinar el servicio del paciente
-                string servicio_paciente= arbol->clasificarPaciente(p);
+                string servicio_paciente= arbol->clasificarPaciente(p, ruta);
                 //le actualizamos el servicio
                 p->setServicio(servicio_paciente);
                 
@@ -126,6 +127,8 @@ int main(int argc, char** argv) {
                 hospital->ingresar_pacienteavl(p);
                 cout << "ID: " << p->getId() << endl;
                 cout << "Nombre: " << p->getNombre() << endl;
+
+                cout<<"Ruta de decision: "<<ruta<<endl; 
                 cout << "Servicio asignado: " << servicio_paciente<<endl;
                 cout << "Paciente insertado en el AVL de " << servicio_paciente << "." << endl;
                 cout << "---------------------------------" << endl;
