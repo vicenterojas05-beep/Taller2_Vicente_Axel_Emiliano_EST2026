@@ -143,13 +143,72 @@ int main(int argc, char** argv) {
             case 2: {
 
                 cout<<"=== ESTADO DE LOS DEPARTAMENTOS/SERVICIOS ==="<<endl;
-            
+ 
+                cout << "Urgencias" << endl;
+                if (hospital->urgencias->estaVacio()) {
+                    cout << "Sin pacientes" << endl;
+                }
+                else {
+                    hospital->urgencias->mostrarInorden(); 
+                }
+
+                cout << "Medicina General" << endl;
+                if (hospital->medicina_general->estaVacio()) {
+                    cout << "Sin pacientes" << endl;
+                }
+                else {
+                    hospital->medicina_general->mostrarInorden(); 
+                }
+
+                cout << "Hospitalizacion" << endl;
+                if (hospital->hospitalizacion->estaVacio()) {
+                    cout << "Sin pacientes" << endl;
+                }
+                else {
+                    hospital->hospitalizacion->mostrarInorden(); 
+                }
+
+                cout << "Pediatria" << endl;
+                if (hospital->pediatria->estaVacio()) {
+                    cout << "Sin pacientes" << endl;
+                }
+                else {
+                    hospital->pediatria->mostrarInorden(); 
+                }
+
+                cout << "Traumatologia" << endl;
+                if (hospital->traumatologia->estaVacio()) {
+                    cout << "Sin pacientes" << endl;
+                }
+                else {
+                    hospital->traumatologia->mostrarInorden(); 
+                }
+
+                cout << "Neurologia" << endl;
+                if (hospital->neurologia->estaVacio()) {
+                    cout << "Sin pacientes" << endl;
+                }
+                else {
+                    hospital->neurologia->mostrarInorden(); 
+                }
+
+                cout << "Cardiologia" << endl;
+                if (hospital->cardiologia->estaVacio()) {
+                    cout << "Sin pacientes" << endl;
+                }
+                else {
+                    hospital->cardiologia->mostrarInorden(); 
+                }
+
+                cout << "Cirugia" << endl;
+                if (hospital->cirugia->estaVacio()) {
+                    cout << "Sin pacientes" << endl;
+                }
+                else {
+                    hospital->cirugia->mostrarInorden(); 
+                }
+    
                 break;
-
-				
-			
-
-            
 			}
 
 

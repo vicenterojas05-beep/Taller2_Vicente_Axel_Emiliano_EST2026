@@ -244,6 +244,13 @@ Paciente* Avl::buscar(string id) {
     return nullptr;
 }
 
+bool Avl::estaVacio(){
+    if(raiz==nullptr){
+        return true;
+    }
+    return false;
+}
+
 void Avl::eliminar(string id) {
     raiz = eliminarRecursivo(raiz, id);
 }
@@ -259,6 +266,8 @@ void Avl::mostrarPreorden() {
 void Avl::mostrarPostorden() {
     postordenRecursivo(raiz);
 }
+
+
     
 
 

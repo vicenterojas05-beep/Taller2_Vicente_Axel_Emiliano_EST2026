@@ -42,6 +42,7 @@ public:
     void mostrarInorden();
     void mostrarPreorden();
     void mostrarPostorden();
+    bool estaVacio();
 
     
 };
