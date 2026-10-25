@@ -115,17 +115,30 @@
     return nodo;
 
     }
-    NodoAvl* Avl::buscarRecursivo(NodoAvl* nodo, string id){
+    NodoAvl* Avl::buscarRecursivo(NodoAvl* nodo, string id, string& recorrido){
 
-        if (nodo == nullptr || nodo->getPaciente()->getId() == id) {
+        if(nodo==nullptr){
+            return nullptr;
+        }
+
+        //guardamos el id en el recorrido
+        if (recorrido != ""){
+            recorrido += " -> ";
+        }
+
+        recorrido += nodo->getPaciente()->getId();
+    
+    
+
+        if ( nodo->getPaciente()->getId() == id) {
         return nodo;
         }
 
         if (nodo->getPaciente()->getId() < id) {
-        return buscarRecursivo(nodo->getDer(), id);
+        return buscarRecursivo(nodo->getDer(), id, recorrido);
         }
 
-        return buscarRecursivo(nodo->getIzq(), id);
+        return buscarRecursivo(nodo->getIzq(), id, recorrido);
 
     }
 
@@ -236,8 +249,8 @@ void Avl::insertar(Paciente* p) {
     raiz = insertarRecursivo(raiz, p);
 }
 
-Paciente* Avl::buscar(string id) {
-    NodoAvl* resultado = buscarRecursivo(raiz, id);
+Paciente* Avl::buscar(string id, string& recorrido) {
+    NodoAvl* resultado = buscarRecursivo(raiz, id, recorrido);
     if (resultado != nullptr) {
         return resultado->getPaciente();
     }

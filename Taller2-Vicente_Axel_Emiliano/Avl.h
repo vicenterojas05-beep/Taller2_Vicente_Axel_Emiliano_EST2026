@@ -20,7 +20,7 @@ private:
 
     
     NodoAvl* insertarRecursivo(NodoAvl* nodo, Paciente* p);
-    NodoAvl* buscarRecursivo(NodoAvl* nodo, string id);
+    NodoAvl* buscarRecursivo(NodoAvl* nodo, string id, string& recorrido);
     NodoAvl* eliminarRecursivo(NodoAvl* nodo, string id); 
     
     // recorridos
@@ -36,7 +36,7 @@ public:
     ~Avl();
 
     void insertar(Paciente* p);
-    Paciente* buscar(string id);
+    Paciente* buscar(string id, string& recorrido);
     void eliminar(string id);
     
     void mostrarInorden();

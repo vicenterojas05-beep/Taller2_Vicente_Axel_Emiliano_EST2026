@@ -136,6 +136,9 @@ int main(int argc, char** argv) {
                 cola->pop(); 
 
                 }
+                else{
+                    cout<<"No hay  pacientes que atender"<<endl;
+                }
                 
                 break;
             }
@@ -212,13 +215,50 @@ int main(int argc, char** argv) {
 			}
 
 
-            case 3:{
-                cout<<"=== BUSCAR PACIENTE ==="<<endl;
-
+            case 3: {
+                cout << "=== BUSCAR PACIENTE ===" << endl;
+                string id_buscado;
+                cout << "Indique el ID o Nombre del paciente: ";
+                cin >> id_buscado;
+                cout << "Buscando en AVL.." << endl;
+                
+                Paciente* p = nullptr;
+                string ruta_busqueda = "";
+                
+                //buscamos en cadena, primero hace el proceso de buscar y luego en el mismo if/else if 
+                //hace la comparacion !=nullptr y (en el caso de que lo haya encontrado),
+                //entra en este y los else if que le proceden no se ejecutan
+                if ((p = hospital->urgencias->buscar(id_buscado, ruta_busqueda)) != nullptr) {}
+                else if ((p = hospital->medicina_general->buscar(id_buscado, ruta_busqueda)) != nullptr) {}
+                else if ((p = hospital->cardiologia->buscar(id_buscado, ruta_busqueda)) != nullptr) {}
+                else if ((p = hospital->neurologia->buscar(id_buscado, ruta_busqueda)) != nullptr) {}
+                else if ((p = hospital->traumatologia->buscar(id_buscado, ruta_busqueda)) != nullptr) {}
+                else if ((p = hospital->cirugia->buscar(id_buscado, ruta_busqueda)) != nullptr) {}
+                else if ((p = hospital->pediatria->buscar(id_buscado, ruta_busqueda)) != nullptr) {}
+                else if ((p = hospital->hospitalizacion->buscar(id_buscado, ruta_busqueda)) != nullptr) {}
+                
+                if (p != nullptr) {
+                    cout << "Paciente encontrado:" << endl;
+                    cout << "ID: " << p->getId() << endl;
+                    cout << "Nombre: " << p->getNombre() << endl;
+                    cout << "Edad: " << p->getEdad() << endl;
+                    cout << "Departamento: " << p->getServicio() << endl;
+                    
+                    //formato que sale en el pdf
+                    cout << "T: " << p->getTemperatura() << " | ";
+                    cout<< "D: " << p->getDolor() << " | ";
+                    cout<< "TD: " << p->getTipodolor() << " | ";
+                    cout<< "T: " << (p->getTrauma() == 1 ? "Si" : "No") << " | ";
+                    cout<< "SN: " << (p->getSintomasneuro() == 1 ? "Si" : "No") << " | ";
+                    cout<< "RC: " << (p->getRequierecirugia() == 1 ? "Si" : "No") << " | ";
+                    cout<< "DH: " << p->getDiashospital() << endl;
+                    
+                    cout << "Ruta de busqueda: \n" << ruta_busqueda << endl;
+                } 
+                else {
+                    cout << "Paciente no encontrado." << endl;
+                }
                 break;
-            
-            
-
             }
 
             case 4:{
@@ -235,11 +275,6 @@ int main(int argc, char** argv) {
             
 
         }
-
-        
-
-
-
     }while(opcion!=4);
     
 
